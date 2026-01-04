@@ -1,0 +1,41 @@
+# ===============================
+# macOS
+# ===============================
+.DS_Store
+
+# ===============================
+# Logs
+# ===============================
+*.log
+logs/
+
+# ===============================
+# Frontend
+# ===============================
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+
+# ===============================
+# Backend (Spring)
+# ===============================
+backend/.gradle/
+backend/build/
+backend/target/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# ===============================
+# Environment
+# ===============================
+.env
+.env.*
+backend/src/main/resources/application-*.yml
+backend/src/main/resources/application-*.properties
+
+!backend/src/main/resources/application.yml
+!backend/src/main/resources/application.properties
+

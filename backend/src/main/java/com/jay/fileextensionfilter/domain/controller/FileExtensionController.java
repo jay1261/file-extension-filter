@@ -2,9 +2,7 @@ package com.jay.fileextensionfilter.domain.controller;
 
 import com.jay.fileextensionfilter.common.BaseResponse;
 import com.jay.fileextensionfilter.common.enums.SuccessType;
-import com.jay.fileextensionfilter.domain.dto.CustomExtensionDto;
-import com.jay.fileextensionfilter.domain.dto.FileExtensionRequestDto;
-import com.jay.fileextensionfilter.domain.dto.FileExtensionResponseDto;
+import com.jay.fileextensionfilter.domain.dto.*;
 import com.jay.fileextensionfilter.domain.service.FileExtensionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -36,16 +34,52 @@ public class FileExtensionController {
             @Valid @RequestBody FileExtensionRequestDto request) {
 
         CustomExtensionDto saved = fileExtensionService.addCustomExtension(request);
+        SuccessType successType = SuccessType.CUSTOM_EXTENSION_CREATED;
 
-        BaseResponse<CustomExtensionDto> response =
+                BaseResponse<CustomExtensionDto> response =
                 new BaseResponse<>(
-                        SuccessType.CUSTOM_EXTENSION_CREATED.getHttpStatus().value(),
-                        SuccessType.CUSTOM_EXTENSION_CREATED.getMessage(),
+                        successType.getHttpStatus().value(),
+                        successType.getMessage(),
                         saved
                 );
 
         return ResponseEntity
-                .status(SuccessType.CUSTOM_EXTENSION_CREATED.getHttpStatus())
+                .status(successType.getHttpStatus())
+                .body(response);
+    }
+
+    @PatchMapping("/fixed/{id}")
+    public ResponseEntity<BaseResponse<FixedExtensionDto>> updateFixedExtension(
+            @PathVariable Long id,
+            @Valid @RequestBody FixedExtensionRequestDto request) {
+
+        FixedExtensionDto updated = fileExtensionService.updateBlockedState(id, request);
+        SuccessType successType = SuccessType.FIXED_EXTENSION_TOGGLED;
+
+        BaseResponse<FixedExtensionDto> response = new BaseResponse<>(
+                successType.getHttpStatus().value(),
+                successType.getMessage(),
+                updated
+        );
+
+        return ResponseEntity
+                .status(successType.getHttpStatus())
+                .body(response);
+    }
+
+    @DeleteMapping("/custom/{id}")
+    public ResponseEntity<BaseResponse<Void>> deleteCustomExtension(@PathVariable Long id) {
+        fileExtensionService.deleteCustomExtension(id);
+        SuccessType successType = SuccessType.CUSTOM_EXTENSION_DELETED;
+
+        BaseResponse<Void> response = new BaseResponse<>(
+                successType.getHttpStatus().value(),
+                successType.getMessage() + " id: " + id,
+                null
+        );
+
+        return ResponseEntity
+                .status(successType.getHttpStatus())
                 .body(response);
     }
 }

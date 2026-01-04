@@ -4,6 +4,7 @@ import com.jay.fileextensionfilter.common.enums.Type;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -20,6 +21,7 @@ public class FileExtension extends BaseTimeEntity {
     @Column(nullable = false)
     private Type type;
 
+    @Setter
     @Column(nullable = false)
     private boolean blocked;
 

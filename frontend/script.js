@@ -66,6 +66,26 @@ function addCustomExtension(name) {
     });
 }
 
+function removeCustomExtension(id) {
+    if (!confirm('정말 삭제하시겠습니까?')) return;
+
+    $.ajax({
+        url: `${BASE_URL}/file-extensions/custom/${id}`,
+        type: 'DELETE',
+        success: function(res) {
+            customExtensions = customExtensions.filter(c => c.id !== id);
+            renderCustomExtensions();
+        },
+        error: function(jqXHR) {
+            let msg = '삭제에 실패했습니다.';
+            try {
+                const res = JSON.parse(jqXHR.responseText);
+                if (res.message) msg = res.message;
+            } catch (e) {}
+            alert(msg);
+        }
+    });
+}
 
 function updateCount() {
     $('#count').text(`${customExtensions.length}/${MAX_CUSTOM}`);

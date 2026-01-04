@@ -27,6 +27,7 @@ class FileExtension {
             `);
             $tag.find('.remove').click(() => {
                 // TODO: 삭제 함수 구현
+                removeCustomExtension(this.id);
             });
             return $tag;
         }

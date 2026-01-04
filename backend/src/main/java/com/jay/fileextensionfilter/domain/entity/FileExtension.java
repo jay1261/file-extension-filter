@@ -1,6 +1,6 @@
 package com.jay.fileextensionfilter.domain.entity;
 
-import com.jay.fileextensionfilter.common.enums.Type;
+import com.jay.fileextensionfilter.common.enums.ExtensionType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +19,7 @@ public class FileExtension extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Type type;
+    private ExtensionType extensionType;
 
     @Setter
     @Column(nullable = false)
@@ -28,6 +28,6 @@ public class FileExtension extends BaseTimeEntity {
     public FileExtension(String customName){
         this.name = customName;
         this.blocked = true;
-        this.type = Type.CUSTOM;
+        this.extensionType = ExtensionType.CUSTOM;
     }
 }

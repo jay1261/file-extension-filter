@@ -1,20 +1,16 @@
 package com.jay.fileextensionfilter.domain.service;
 
 import com.jay.fileextensionfilter.common.enums.ErrorType;
-import com.jay.fileextensionfilter.common.enums.Type;
+import com.jay.fileextensionfilter.common.enums.ExtensionType;
 import com.jay.fileextensionfilter.common.exception.CustomException;
 import com.jay.fileextensionfilter.domain.dto.*;
 import com.jay.fileextensionfilter.domain.entity.FileExtension;
 import com.jay.fileextensionfilter.domain.repository.FileExtensionRepository;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,15 +18,15 @@ public class FileExtensionService {
     private final FileExtensionRepository fileExtensionRepository;
 
     public FileExtensionResponseDto getExtensions() {
-        List<FileExtension> fixed = fileExtensionRepository.findAllByType(Type.FIXED);
-        List<FileExtension> custom = fileExtensionRepository.findAllByType(Type.CUSTOM);
+        List<FileExtension> fixed = fileExtensionRepository.findAllByExtensionType(ExtensionType.FIXED);
+        List<FileExtension> custom = fileExtensionRepository.findAllByExtensionType(ExtensionType.CUSTOM);
 
         List<FixedExtensionDto> fixedDtos = fixed.stream()
-                .map(e -> new FixedExtensionDto(e.getId(), e.getName(), e.isBlocked()))
+                .map(e -> new FixedExtensionDto(e.getId(), e.getName(), e.isBlocked(), e.getExtensionType()))
                 .toList();
 
         List<CustomExtensionDto> customDtos = custom.stream()
-                .map(e -> new CustomExtensionDto(e.getId(), e.getName()))
+                .map(e -> new CustomExtensionDto(e.getId(), e.getName(), e.getExtensionType()))
                 .toList();
 
         return new FileExtensionResponseDto(fixedDtos, customDtos);
@@ -53,7 +49,7 @@ public class FileExtensionService {
         }
 
         // 커스텀 200개 제한
-        long customCount = fileExtensionRepository.countByType(Type.CUSTOM);
+        long customCount = fileExtensionRepository.countByExtensionType(ExtensionType.CUSTOM);
         if (customCount >= 200) {
             throw new CustomException(ErrorType.MAX_CUSTOM_EXTENSION_REACHED);
         }
@@ -62,7 +58,7 @@ public class FileExtensionService {
 
         FileExtension saved = fileExtensionRepository.save(fileExtension);
 
-        return new CustomExtensionDto(saved.getId(), saved.getName());
+        return new CustomExtensionDto(saved.getId(), saved.getName(), saved.getExtensionType());
     }
 
     @Transactional
@@ -71,13 +67,13 @@ public class FileExtensionService {
                 () -> new CustomException(ErrorType.FILE_EXTENSION_NOT_FOUND)
         );
 
-        if(fileExtension.getType().equals(Type.CUSTOM)){
+        if(fileExtension.getExtensionType().equals(ExtensionType.CUSTOM)){
             throw new CustomException(ErrorType.CANNOT_TOGGLE_CUSTOM_EXTENSION);
         }
 
         fileExtension.setBlocked(request.getBlocked());
 
-        return new FixedExtensionDto(fileExtension.getId(), fileExtension.getName(), fileExtension.isBlocked());
+        return new FixedExtensionDto(fileExtension.getId(), fileExtension.getName(), fileExtension.isBlocked(), fileExtension.getExtensionType());
     }
 
     @Transactional
@@ -85,7 +81,7 @@ public class FileExtensionService {
         FileExtension fileExtension = fileExtensionRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorType.FILE_EXTENSION_NOT_FOUND));
 
-        if(fileExtension.getType() != Type.CUSTOM) {
+        if(fileExtension.getExtensionType() != ExtensionType.CUSTOM) {
             throw new CustomException(ErrorType.CANNOT_DELETE_FIXED_EXTENSION);
         }
 

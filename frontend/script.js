@@ -87,12 +87,38 @@ function removeCustomExtension(id) {
     });
 }
 
+function toggleFixedBlocked(extension, blockedStatus) {
+    $.ajax({
+        url: `${BASE_URL}/file-extensions/fixed/${extension.id}`,
+        type: 'PATCH',
+        contentType: 'application/json',
+        data: JSON.stringify({ blocked: blockedStatus }),
+        success: function(res) {
+            extension.blocked = res.data.blocked;
+            renderFixedExtensions();
+        },
+        error: function(jqXHR) {
+            let msg = '상태 변경에 실패했습니다.';
+            try {
+                const res = JSON.parse(jqXHR.responseText);
+                if (res.message) msg = res.message;
+            } catch (e) {}
+            alert(msg);
+        }
+    });
+}
+
 function updateCount() {
     $('#count').text(`${customExtensions.length}/${MAX_CUSTOM}`);
 }
 
 function normalizeExtensionName(name) {
     return name.trim().replace(/\./g, '').toLowerCase();
+}
+
+function renderFixedExtensions() {
+    $('#fixedList').empty();
+    fixedExtensions.forEach(f => $('#fixedList').append(f.render()));
 }
 
 function renderCustomExtensions() {

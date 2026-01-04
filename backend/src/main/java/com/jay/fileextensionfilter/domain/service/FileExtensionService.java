@@ -3,19 +3,18 @@ package com.jay.fileextensionfilter.domain.service;
 import com.jay.fileextensionfilter.common.enums.ErrorType;
 import com.jay.fileextensionfilter.common.enums.Type;
 import com.jay.fileextensionfilter.common.exception.CustomException;
-import com.jay.fileextensionfilter.domain.dto.CustomExtensionDto;
-import com.jay.fileextensionfilter.domain.dto.FileExtensionRequestDto;
-import com.jay.fileextensionfilter.domain.dto.FileExtensionResponseDto;
-import com.jay.fileextensionfilter.domain.dto.FixedExtensionDto;
+import com.jay.fileextensionfilter.domain.dto.*;
 import com.jay.fileextensionfilter.domain.entity.FileExtension;
 import com.jay.fileextensionfilter.domain.repository.FileExtensionRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -64,5 +63,20 @@ public class FileExtensionService {
         FileExtension saved = fileExtensionRepository.save(fileExtension);
 
         return new CustomExtensionDto(saved.getId(), saved.getName());
+    }
+
+    @Transactional
+    public FixedExtensionDto updateBlockedState(Long id, FixedExtensionRequestDto request) {
+        FileExtension fileExtension = fileExtensionRepository.findById(id).orElseThrow(
+                () -> new CustomException(ErrorType.FILE_EXTENSION_NOT_FOUND)
+        );
+
+        if(fileExtension.getType().equals(Type.CUSTOM)){
+            throw new CustomException(ErrorType.CANNOT_TOGGLE_CUSTOM_EXTENSION);
+        }
+
+        fileExtension.setBlocked(request.getBlocked());
+
+        return new FixedExtensionDto(fileExtension.getId(), fileExtension.getName(), fileExtension.isBlocked());
     }
 }

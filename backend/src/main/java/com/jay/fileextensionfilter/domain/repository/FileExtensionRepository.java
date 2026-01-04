@@ -9,4 +9,8 @@ import java.util.List;
 public interface FileExtensionRepository extends JpaRepository<FileExtension, Long> {
 
     List<FileExtension> findAllByType(Type type);
+
+    boolean existsByName(String normalized);
+
+    long countByType(Type type);
 }

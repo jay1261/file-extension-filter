@@ -3,6 +3,8 @@ package com.jay.fileextensionfilter.common.exception;
 import com.jay.fileextensionfilter.common.BaseResponse;
 import com.jay.fileextensionfilter.common.enums.ErrorType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -27,4 +29,21 @@ public class GlobalExceptionHandler {
                         null);
         return ResponseEntity.status(ErrorType.INTERNAL_SERVER_ERROR.getHttpStatus()).body(response);
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<BaseResponse<Void>> handleValidationException(MethodArgumentNotValidException ex) {
+
+        // 첫 번째 에러 메시지 가져오기
+        FieldError fieldError = ex.getBindingResult().getFieldError();
+        String message = fieldError != null ? fieldError.getDefaultMessage() : "Invalid input";
+
+        BaseResponse<Void> response = new BaseResponse<>(
+                ErrorType.INVALID_INPUT.getHttpStatus().value(),
+                message,
+                null
+        );
+
+        return ResponseEntity.status(ErrorType.INVALID_INPUT.getHttpStatus()).body(response);
+    }
+
 }

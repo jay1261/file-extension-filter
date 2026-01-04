@@ -22,5 +22,10 @@ public class FileExtension extends BaseTimeEntity {
 
     @Column(nullable = false)
     private boolean blocked;
-    
+
+    public FileExtension(String customName){
+        this.name = customName;
+        this.blocked = true;
+        this.type = Type.CUSTOM;
+    }
 }

@@ -11,6 +11,8 @@ public enum ErrorType {
     INVALID_EXTENSION_FORMAT(HttpStatus.BAD_REQUEST, "Invalid extension format"),
     EXTENSION_TOO_LONG(HttpStatus.BAD_REQUEST, "Extension exceeds maximum length (20 characters)"),
     EXTENSION_EMPTY(HttpStatus.BAD_REQUEST, "Extension cannot be empty"),
+    INVALID_INPUT(HttpStatus.BAD_REQUEST, "Invalid input"),
+
 
     FILE_EXTENSION_ALREADY_EXIST(HttpStatus.BAD_REQUEST, "File extension already exists"),
 

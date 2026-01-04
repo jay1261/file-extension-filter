@@ -2,15 +2,14 @@ package com.jay.fileextensionfilter.domain.controller;
 
 import com.jay.fileextensionfilter.common.BaseResponse;
 import com.jay.fileextensionfilter.common.enums.SuccessType;
+import com.jay.fileextensionfilter.domain.dto.CustomExtensionDto;
 import com.jay.fileextensionfilter.domain.dto.FileExtensionRequestDto;
 import com.jay.fileextensionfilter.domain.dto.FileExtensionResponseDto;
 import com.jay.fileextensionfilter.domain.service.FileExtensionService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,4 +31,21 @@ public class FileExtensionController {
         return ResponseEntity.status(successType.getHttpStatus().value()).body(response);
     }
 
+    @PostMapping("/custom")
+    public ResponseEntity<BaseResponse<CustomExtensionDto>> createCustomExtension(
+            @Valid @RequestBody FileExtensionRequestDto request) {
+
+        CustomExtensionDto saved = fileExtensionService.addCustomExtension(request);
+
+        BaseResponse<CustomExtensionDto> response =
+                new BaseResponse<>(
+                        SuccessType.CUSTOM_EXTENSION_CREATED.getHttpStatus().value(),
+                        SuccessType.CUSTOM_EXTENSION_CREATED.getMessage(),
+                        saved
+                );
+
+        return ResponseEntity
+                .status(SuccessType.CUSTOM_EXTENSION_CREATED.getHttpStatus())
+                .body(response);
+    }
 }

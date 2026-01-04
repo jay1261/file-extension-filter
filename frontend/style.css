@@ -1,0 +1,58 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+body {
+    font-family: 'Pretendard', sans-serif;
+    padding: 20px;
+}
+
+h2 {
+    border-bottom: 2px solid #000;
+    padding-bottom: 5px;
+}
+
+.section {
+    margin-top: 20px;
+}
+
+.section .title {
+    font-weight: 700;
+}
+
+.fixed-extensions label {
+    margin-right: 10px;
+}
+
+.custom-input {
+    margin-top: 10px;
+}
+
+.custom-input input {
+    padding: 5px;
+    width: 150px;
+}
+
+.custom-input button {
+    padding: 5px 10px;
+}
+
+.custom-list {
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    min-height: 50px;
+    padding: 10px;
+    width: 300px;
+}
+
+.tag {
+    display: inline-block;
+    background: #eee;
+    border-radius: 5px;
+    padding: 2px 8px;
+    margin: 2px;
+}
+
+.tag .remove {
+    margin-left: 5px;
+    cursor: pointer;
+    color: red;
+}

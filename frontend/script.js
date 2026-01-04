@@ -21,11 +21,8 @@ function loadExtensions() {
         customExtensions = data.customExtensions.map(c => new FileExtension(c));
 
         // 렌더링
-        $('#fixedList').empty();
-        fixedExtensions.forEach(f => $('#fixedList').append(f.render()));
-
-        $('#customList').empty();
-        customExtensions.forEach(c => $('#customList').append(c.render()));
+        renderFixedExtensions();
+        renderCustomExtensions();
 
         // 카운트 업데이트
         updateCount();

@@ -1,5 +1,6 @@
 package com.jay.fileextensionfilter.domain.dto;
 
+import com.jay.fileextensionfilter.common.enums.ExtensionType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -8,4 +9,5 @@ import lombok.Getter;
 public class CustomExtensionDto {
     private Long id;
     private String name;
+    private ExtensionType extensionType;
 }

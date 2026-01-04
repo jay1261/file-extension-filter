@@ -79,4 +79,16 @@ public class FileExtensionService {
 
         return new FixedExtensionDto(fileExtension.getId(), fileExtension.getName(), fileExtension.isBlocked());
     }
+
+    @Transactional
+    public void deleteCustomExtension(Long id) {
+        FileExtension fileExtension = fileExtensionRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorType.FILE_EXTENSION_NOT_FOUND));
+
+        if(fileExtension.getType() != Type.CUSTOM) {
+            throw new CustomException(ErrorType.CANNOT_DELETE_FIXED_EXTENSION);
+        }
+
+        fileExtensionRepository.delete(fileExtension);
+    }
 }

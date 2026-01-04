@@ -66,4 +66,20 @@ public class FileExtensionController {
                 .status(successType.getHttpStatus())
                 .body(response);
     }
+
+    @DeleteMapping("/custom/{id}")
+    public ResponseEntity<BaseResponse<Void>> deleteCustomExtension(@PathVariable Long id) {
+        fileExtensionService.deleteCustomExtension(id);
+        SuccessType successType = SuccessType.CUSTOM_EXTENSION_DELETED;
+
+        BaseResponse<Void> response = new BaseResponse<>(
+                successType.getHttpStatus().value(),
+                successType.getMessage() + " id: " + id,
+                null
+        );
+
+        return ResponseEntity
+                .status(successType.getHttpStatus())
+                .body(response);
+    }
 }

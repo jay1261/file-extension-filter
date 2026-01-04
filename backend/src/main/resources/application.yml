@@ -1,3 +1,6 @@
 spring:
   application:
     name: fileextensionfilter
+
+  profiles:
+    active: local

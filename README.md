@@ -101,4 +101,5 @@ repo/
 - AWS EC2 단일 인스턴스에 배포
 - Docker Compose를 사용하여 프론트엔드, 백엔드, Nginx 컨테이너 구성
 - Nginx를 리버스 프록시로 사용하고 SSL 설정을 통해 HTTPS 적용
+- Github Action, Docker Compose를 활용해 배포 자동화
 ```

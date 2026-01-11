@@ -1,11 +1,11 @@
-package com.jay.fileextensionfilter.domain.service;
+package com.jay.fileextensionfilter.fileextension.service;
 
 import com.jay.fileextensionfilter.common.enums.ErrorType;
 import com.jay.fileextensionfilter.common.enums.ExtensionType;
 import com.jay.fileextensionfilter.common.exception.CustomException;
-import com.jay.fileextensionfilter.domain.dto.*;
-import com.jay.fileextensionfilter.domain.entity.FileExtension;
-import com.jay.fileextensionfilter.domain.repository.FileExtensionRepository;
+import com.jay.fileextensionfilter.fileextension.dto.*;
+import com.jay.fileextensionfilter.fileextension.entity.FileExtension;
+import com.jay.fileextensionfilter.fileextension.repository.FileExtensionRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

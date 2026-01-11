@@ -1,7 +1,7 @@
-package com.jay.fileextensionfilter.domain.repository;
+package com.jay.fileextensionfilter.fileextension.repository;
 
 import com.jay.fileextensionfilter.common.enums.ExtensionType;
-import com.jay.fileextensionfilter.domain.entity.FileExtension;
+import com.jay.fileextensionfilter.fileextension.entity.FileExtension;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

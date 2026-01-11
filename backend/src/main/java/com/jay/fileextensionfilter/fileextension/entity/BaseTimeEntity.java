@@ -1,4 +1,4 @@
-package com.jay.fileextensionfilter.domain.entity;
+package com.jay.fileextensionfilter.fileextension.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

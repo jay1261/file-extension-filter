@@ -1,4 +1,4 @@
-package com.jay.fileextensionfilter.domain.entity;
+package com.jay.fileextensionfilter.fileextension.entity;
 
 import com.jay.fileextensionfilter.common.enums.ExtensionType;
 import jakarta.persistence.*;

@@ -1,9 +1,9 @@
-package com.jay.fileextensionfilter.domain.controller;
+package com.jay.fileextensionfilter.fileextension.controller;
 
 import com.jay.fileextensionfilter.common.BaseResponse;
 import com.jay.fileextensionfilter.common.enums.SuccessType;
-import com.jay.fileextensionfilter.domain.dto.*;
-import com.jay.fileextensionfilter.domain.service.FileExtensionService;
+import com.jay.fileextensionfilter.fileextension.dto.*;
+import com.jay.fileextensionfilter.fileextension.service.FileExtensionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

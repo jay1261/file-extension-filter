@@ -1,4 +1,4 @@
-package com.jay.fileextensionfilter.domain.dto;
+package com.jay.fileextensionfilter.fileextension.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
